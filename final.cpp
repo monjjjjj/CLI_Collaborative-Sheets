@@ -213,7 +213,7 @@ class CheckSheetVisitor: public Visitor
     {
         for ( const auto &row : data )
         {
-           for ( const auto &s : row ) std::cout << s << ' ';
+           for ( const auto &s : row ) std::cout << s << "," << " ";
            std::cout << std::endl;
         }
         cout << "\n";
@@ -256,7 +256,7 @@ class UpdateSheetVisitor: public Visitor
     {
         for ( const auto &row : data )
         {
-           for ( const auto &s : row ) std::cout << s << ' ';
+           for ( const auto &s : row ) std::cout << s << "," << " ";
            std::cout << std::endl;
         }
         cout << "\n";
@@ -306,7 +306,8 @@ class UpdatePermissionVisitor: public Visitor
         	db->update_permission(user_name, sheet_name, permission == "Editable");
         else if (permission == "Editable")
         	db->update_permission(user_name, sheet_name, permission == "Editable");
-        else throw invalid_argument( "Invalid input!\n" );
+        else 
+			cout << "\nInvalid input!\n";
         cout << endl;
     }
 };
@@ -323,7 +324,7 @@ class CollaborateSheetVisitor: public Visitor
         cin >> user_name >> sheet_name >> another_user_name;
         try {
             db->add_collaborate_user(user_name, sheet_name, another_user_name);
-            cout << "Share \"" << user_name << "\"'s \"" << sheet_name << "\" with \"" << another_user_name << "\"." << endl;
+            cout << "Share \"" << user_name << "\"'s \"" << sheet_name << "\" with \"" << another_user_name << "\"" << ".\n" << endl;
         } catch( const std::invalid_argument& e ) {
             cout << e.what() << endl;
         }
@@ -390,6 +391,7 @@ int main()
             db.accept(collaborateSheetVisitor);
             c_num = "0";
         }
+        
         else{
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             c_num = menu();
